@@ -14,13 +14,13 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'phone',
+        'track',
         'password',
         'type',
+        'password',
     ];
 
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 

@@ -8,7 +8,8 @@ class Option extends Model
 {
     protected $fillable = [
         'question_id',
-        'option_text',
+        'label',
+        'labelAr',
         'score_value',
         'tag',
     ];

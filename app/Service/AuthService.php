@@ -16,16 +16,14 @@ class AuthService
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => $data['phone'] ?? null,
             'password' => Hash::make($data['password']),
-            'type' => 'student',
+            'track' => $data['track']
         ]);
     }
 
     public function login($identifier, $password)
     {
         $user = User::where('email', $identifier)
-            ->orWhere('phone', $identifier)
             ->first();
 
         if (!$user || !Hash::check($password, $user->password)) {

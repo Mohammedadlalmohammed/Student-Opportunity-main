@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->nullable()->index();
             $table->string('password');
+            $table->enum('track', ["Literary", "Scientific"]);
             $table->enum('type', ['student', 'admin'])
                 ->default('student');
             $table->timestamp('email_verified_at')->nullable();

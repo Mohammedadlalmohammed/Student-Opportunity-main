@@ -8,8 +8,9 @@ class Question extends Model
 {
     protected $fillable = [
         'assessment_id',
-        'question_text',
-        'category',
+        'text',
+        'textAr',
+        'track',
         'weight',
     ];
 
