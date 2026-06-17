@@ -16,6 +16,7 @@ return new class extends Migration {
                 ->constrained()
                 ->cascadeOnDelete();
             $table->text('option_text');
+            $table->text('option_text_ar')->nullable();
             $table->integer('score_value');
             $table->string('tag');
             $table->timestamps();

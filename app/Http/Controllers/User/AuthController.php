@@ -23,22 +23,26 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'phone' => 'nullable|unique:users',
-            'password' => 'required|min:8|confirmed',
-        ]);
+       $validated = $request->validate([
+    'name'     => 'required|string',
+    'email'    => 'required|email|unique:users',
+    'phone'    => 'nullable|unique:users',
+    'password' => 'required|min:8|confirmed',
+    'track'    => 'nullable|in:Scientific,Literary',
+]);
 
         $user = $this->authService->register($validated);
 
         $token = $this->authService->createToken($user);
 
-        return ApiResponse::success([
-            'user' => $user,
-            'token' => $token
-        ], 'Registration successful');
-    }
+return ApiResponse::success([
+    'user' => [
+        'name'  => $user->name,
+        'email' => $user->email,
+        'track' => $user->track,
+    ],
+    'token' => $token
+], 'Registration successful');    }
 
     public function login(Request $request)
     {
@@ -58,10 +62,14 @@ class AuthController extends Controller
 
         $token = $this->authService->createToken($user);
 
-        return ApiResponse::success([
-            'user' => $user,
-            'token' => $token
-        ], 'Login successful');
+     return ApiResponse::success([
+    'user' => [
+        'name'  => $user->name,
+        'email' => $user->email,
+        'track' => $user->track,
+    ],
+    'token' => $token
+], 'Login successful');
     }
 
     public function logout(Request $request)
@@ -198,22 +206,28 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'profile fetched',
-            'data' => [
-                'name' => $user->name,
-                'email' => $user->email,
-                'phone' => $user->phone
-            ]
+        'data' => [
+        'name'  => $user->name,
+        'email' => $user->email,
+        'phone' => $user->phone,
+        'track' => $user->track,
+        ]
         ]);
     }
 
     public function updateProfile(Request $request)
     {
         $user = $request->user();
+if ($request->filled('password')) {
+    $request->validate(['password' => 'min:8']);
+    $user->password = Hash::make($request->password);
+}
 
-        $user->update($request->only([
-            'name',
-            'phone'
-        ]));
+$user->update($request->only(['name', 'phone', 'track']));
+
+if ($request->filled('password')) {
+    $user->save();
+}
 
         return response()->json([
             'success' => true,

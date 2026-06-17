@@ -22,4 +22,9 @@ class Option extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+    public function streamWeights()
+{
+    return $this->hasMany(OptionStreamWeight::class);
+}
 }

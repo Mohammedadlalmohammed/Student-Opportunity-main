@@ -16,6 +16,7 @@ return new class extends Migration {
                 ->constrained()
                 ->cascadeOnDelete();
             $table->text('question_text');
+            $table->text('question_text_ar')->nullable();
             $table->string('category')->nullable();
             $table->integer('weight')->default(1);
             $table->timestamps();
