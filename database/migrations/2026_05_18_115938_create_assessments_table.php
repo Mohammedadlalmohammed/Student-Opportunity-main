@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('titleAr');
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive'])
                 ->default('active');

@@ -8,6 +8,7 @@ class Assessment extends Model
 {
     protected $fillable = [
         'title',
+        'titleAr',
         'description',
         'status',
     ];
